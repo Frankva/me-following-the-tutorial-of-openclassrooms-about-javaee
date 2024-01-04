@@ -1,4 +1,3 @@
-<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +6,8 @@
     </head>
     <body>
         <%@ include file="menu.jsp" %>
-        <p>Bonjour ${ auteur.prenom } ${ auteur.nom }</p>
+        <p>Bonjour ${ auteur.prenom } ${ auteur.nom }
+        <c:out value="Bonjour !" />
+        </p>
     </body>
 </html>
