@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 public class Test extends HttpServlet {
 
     public Test() {
@@ -18,8 +19,15 @@ public class Test extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {        
-        String name = request.getParameter("name");
-        request.setAttribute("name", name);
+        Auteur auteur = new Auteur();
+        auteur.setPrenom("Mathieu");
+        auteur.setNom("Nebra");
+        auteur.setActif(true);
+        request.setAttribute("auteur", auteur);
+        // String name = request.getParameter("name");
+        // request.setAttribute("name", name);
+        // String[] noms = {"Mathieu", "Robert", "François"};
+        // request.setAttribute("noms", noms);
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp")
             .forward(request, response);
     }

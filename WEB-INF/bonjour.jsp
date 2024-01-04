@@ -7,11 +7,6 @@
     </head>
     <body>
         <%@ include file="menu.jsp" %>
-        <p>Bonjour 
-            <%
-            String name = (String) request.getAttribute("name");
-            out.println(name);
-            %>
-        </p>
+        <p>Bonjour ${ auteur.prenom } ${ auteur.nom }</p>
     </body>
 </html>
