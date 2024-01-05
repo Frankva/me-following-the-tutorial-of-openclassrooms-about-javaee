@@ -1,3 +1,5 @@
+package servelets;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
@@ -6,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import beans.Auteur;
 
 
 public class Test extends HttpServlet {

@@ -6,7 +6,7 @@
     version="6.0">
   <servlet>
     <servlet-name>Test</servlet-name>
-    <servlet-class>Test</servlet-class>
+    <servlet-class>servelets.Test</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Test</servlet-name>
@@ -15,7 +15,7 @@
 
   <servlet>
     <servlet-name>Accueil</servlet-name>
-    <servlet-class>Accueil</servlet-class>
+    <servlet-class>servelets.Accueil</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Accueil</servlet-name>
