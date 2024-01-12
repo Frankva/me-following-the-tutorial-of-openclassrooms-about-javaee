@@ -34,17 +34,22 @@ public class Test extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {        
-        // Noms tableNoms = new Noms();
-        request.setAttribute("utilisateurs", utilisateurDao.lister());
-        Auteur auteur = new Auteur();
-        auteur.setPrenom("Mathieu");
-        auteur.setNom("Nebra");
-        auteur.setActif(true);
-        request.setAttribute("auteur", auteur);
-        // String name = request.getParameter("name");
-        // request.setAttribute("name", name);
-        // String[] noms = {"Mathieu", "Robert", "François"};
-        // request.setAttribute("noms", noms);
+        try {
+            // Noms tableNoms = new Noms();
+            request.setAttribute("utilisateurs", utilisateurDao.lister());
+            Auteur auteur = new Auteur();
+            auteur.setPrenom("Mathieu");
+            auteur.setNom("Nebra");
+            auteur.setActif(true);
+            request.setAttribute("auteur", auteur);
+            // String name = request.getParameter("name");
+            // request.setAttribute("name", name);
+            // String[] noms = {"Mathieu", "Robert", "François"};
+            // request.setAttribute("noms", noms);
+        }
+        catch (DaoException e) {
+            request.setAttribute("erreur", e.getMessage());
+        }
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp")
             .forward(request, response);
     }
@@ -52,21 +57,26 @@ public class Test extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {
-        // String nom = request.getParameter("nom");
-        // request.setAttribute("nom", nom);
-        
-        // test connexion
-        // ConnectionForm form = new ConnectionForm();
-        // form.verifierIdentifiants(request);
-        // request.setAttribute("form", form);
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setNom(request.getParameter("nom"));
-        utilisateur.setPrenom(request.getParameter("prenom"));
+        try {
+            // String nom = request.getParameter("nom");
+            // request.setAttribute("nom", nom);
+            
+            // test connexion
+            // ConnectionForm form = new ConnectionForm();
+            // form.verifierIdentifiants(request);
+            // request.setAttribute("form", form);
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setNom(request.getParameter("nom"));
+            utilisateur.setPrenom(request.getParameter("prenom"));
 
-        // Noms tableNoms = new Noms();
-        // tableNoms.ajouterUtilisateur(utilisateur);
-        utilisateurDao.ajouter(utilisateur);
-        request.setAttribute("utilisateurs", utilisateurDao.lister());
+            // Noms tableNoms = new Noms();
+            // tableNoms.ajouterUtilisateur(utilisateur);
+            utilisateurDao.ajouter(utilisateur);
+            request.setAttribute("utilisateurs", utilisateurDao.lister());
+        }
+        catch (Exception e) {
+            request.setAttribute("erreur", e.getMessage());
+        }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp")
             .forward(request, response);

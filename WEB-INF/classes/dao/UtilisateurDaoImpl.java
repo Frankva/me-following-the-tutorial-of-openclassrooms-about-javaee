@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Utilisateur;
+import beans.BeanException;
 
 public class UtilisateurDaoImpl implements UtilisateurDao {
     private DaoFactory daoFactory;
@@ -14,7 +15,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     }
 
     @Override
-    public void ajouter(Utilisateur utilisateur) {
+    public void ajouter(Utilisateur utilisateur) throws DaoException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
 
@@ -26,13 +27,14 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(
+                    "impossible de communiquer avec la base de données");
         }
 
     }
 
     @Override
-    public List<Utilisateur> lister() {
+    public List<Utilisateur> lister() throws DaoException {
         List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
         Connection connexion = null;
         Statement statement = null;
@@ -54,7 +56,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 utilisateurs.add(utilisateur);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(
+                    "Impossible de communiquer avec la base de données");
+        } catch (BeanException e) {
+            throw new DaoException("Les données de la base sont invalides");
         }
         return utilisateurs;
     }
