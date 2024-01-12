@@ -29,7 +29,7 @@ public class Noms {
 
             // Récupération des données
             while (resultat.next()) {
-                // voir ResultSet
+                // cf java sql ResultSet
                 String nom = resultat.getString("nom");
                 String prenom = resultat.getString("prenom");
                 
@@ -76,6 +76,7 @@ public class Noms {
         loadDatabase();
 
         try {
+            // cf java sql PreparedStatement
             PreparedStatement preparedStatement =
                 connexion.prepareStatement(
                         "INSERT INTO noms(nom, prenom) VALUES(?, ?);");

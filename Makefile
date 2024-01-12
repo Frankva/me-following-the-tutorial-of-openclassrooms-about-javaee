@@ -1,7 +1,7 @@
 all: servelets shutdown start
 
 servelets: WEB-INF/classes/servelets/*.class
-WEB-INF/classes/servelets/*.class: bdd beans forms WEB-INF/classes/servelets/*.java 
+WEB-INF/classes/servelets/*.class: dao bdd beans forms WEB-INF/classes/servelets/*.java 
 	javac -classpath '../../lib/*;WEB-INF/classes/' \
 		'WEB-INF/classes/servelets/*.java' 
 
@@ -17,6 +17,10 @@ WEB-INF/classes/forms/*.class: WEB-INF/classes/forms/*.java
 bdd: WEB-INF/classes/bdd/*.class
 WEB-INF/classes/bdd/*.class: beans WEB-INF/classes/bdd/*.java
 	javac -classpath 'WEB-INF/classes/' 'WEB-INF/classes/bdd/*.java' 
+
+dao: WEB-INF/classes/dao/*.class
+WEB-INF/classes/dao/*.class: beans WEB-INF/classes/dao/*.java
+	javac -classpath 'WEB-INF/classes/' 'WEB-INF/classes/dao/*.java' 
 
 shutdown:
 	powershell ../../bin/shutdown.bat

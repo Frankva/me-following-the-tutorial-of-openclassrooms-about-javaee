@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import beans.Auteur;
 import forms.ConnectionForm;
 
-import bdd.Noms;
+// import bdd.Noms;
 import beans.Utilisateur;
+
+import dao.*;
 
 public class Test extends HttpServlet {
 
@@ -22,13 +24,18 @@ public class Test extends HttpServlet {
     }
 
     private static final long serialVersionUID = 1L;
+    private UtilisateurDao utilisateurDao;
+
+    public void init() throws ServletException {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        this.utilisateurDao = daoFactory.getUtilisateurDao();
+    }
 
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {        
-        Noms tableNoms = new Noms();
-        request.setAttribute("utilisateurs",
-                tableNoms.recupererUtilisateurs());
+        // Noms tableNoms = new Noms();
+        request.setAttribute("utilisateurs", utilisateurDao.lister());
         Auteur auteur = new Auteur();
         auteur.setPrenom("Mathieu");
         auteur.setNom("Nebra");
@@ -56,10 +63,10 @@ public class Test extends HttpServlet {
         utilisateur.setNom(request.getParameter("nom"));
         utilisateur.setPrenom(request.getParameter("prenom"));
 
-        Noms tableNoms = new Noms();
-        tableNoms.ajouterUtilisateur(utilisateur);
-        request.setAttribute("utilisateurs",
-                tableNoms.recupererUtilisateurs());
+        // Noms tableNoms = new Noms();
+        // tableNoms.ajouterUtilisateur(utilisateur);
+        utilisateurDao.ajouter(utilisateur);
+        request.setAttribute("utilisateurs", utilisateurDao.lister());
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp")
             .forward(request, response);
