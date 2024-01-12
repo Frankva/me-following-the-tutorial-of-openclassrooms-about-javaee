@@ -10,7 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import beans.Auteur;
+import forms.ConnectionForm;
 
+import bdd.Noms;
+import beans.Utilisateur;
 
 public class Test extends HttpServlet {
 
@@ -23,6 +26,9 @@ public class Test extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {        
+        Noms tableNoms = new Noms();
+        request.setAttribute("utilisateurs",
+                tableNoms.recupererUtilisateurs());
         Auteur auteur = new Auteur();
         auteur.setPrenom("Mathieu");
         auteur.setNom("Nebra");
@@ -39,6 +45,24 @@ public class Test extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {
+        // String nom = request.getParameter("nom");
+        // request.setAttribute("nom", nom);
+        
+        // test connexion
+        // ConnectionForm form = new ConnectionForm();
+        // form.verifierIdentifiants(request);
+        // request.setAttribute("form", form);
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(request.getParameter("nom"));
+        utilisateur.setPrenom(request.getParameter("prenom"));
+
+        Noms tableNoms = new Noms();
+        tableNoms.ajouterUtilisateur(utilisateur);
+        request.setAttribute("utilisateurs",
+                tableNoms.recupererUtilisateurs());
+
+        this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp")
+            .forward(request, response);
 
     }
 
