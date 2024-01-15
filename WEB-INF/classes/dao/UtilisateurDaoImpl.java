@@ -21,14 +21,32 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
         try {
             connexion = daoFactory.getConnection();
-            preparedStatement = connexion.prepareStatement("INSERT INTO noms(nom, prenom) VALUES(?, ?);");
+            preparedStatement = connexion.prepareStatement(
+                    "INSERT INTO noms(nom, prenom) VALUES(?, ?);");
             preparedStatement.setString(1, utilisateur.getNom());
             preparedStatement.setString(2, utilisateur.getPrenom());
 
             preparedStatement.executeUpdate();
+            connexion.commit();
         } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException e2) {
+            }
             throw new DaoException(
                     "impossible de communiquer avec la base de données");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DaoException(
+                        "impossible de communiquer avec la base de données");
+            }
         }
 
     }
